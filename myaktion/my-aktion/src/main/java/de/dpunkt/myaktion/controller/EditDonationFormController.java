@@ -1,0 +1,63 @@
+package de.dpunkt.myaktion.controller;
+
+import java.io.Serializable;
+
+import javax.enterprise.context.SessionScoped;
+import javax.faces.context.FacesContext;
+import javax.faces.view.facelets.FaceletContext;
+import javax.inject.Inject;
+import javax.inject.Named;
+import javax.servlet.http.HttpServletRequest;
+
+import de.dpunkt.myaktion.data.CampaignProducer;
+
+@SessionScoped
+@Named
+public class EditDonationFormController implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8465943451138841312L;
+	private String textColor = "000000";
+	private String bgColor = "ffffff";
+	
+	@Inject
+	private CampaignProducer campaignProducer;
+	
+	public String doOk() {
+		return Pages.LIST_CAMPAIGNS;
+	}
+	private String getAppUrl() {
+		HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+		String scheme = request.getScheme();
+		String serverName = request.getServerName();
+		int serverPort = request.getServerPort();
+		String contextPath = request.getContextPath();
+		return scheme + "://" + serverName + ":" + serverPort + contextPath;
+	}
+	
+	public String getUrl() {
+		return getAppUrl() + "/" + Pages.DONATE_MONEY + ".jsf" + "?bgColor=" + bgColor + "&textColor=" + textColor
+							+ "&campaignId=" + campaignProducer.getSelectedCampaign().getId();
+	}
+	
+	public String getTextColor() {
+		return textColor;
+	}
+	
+	public void setTextColor(String textColor) {
+		this.textColor = textColor;
+	}
+
+	public String getBgColor() {
+		return bgColor;
+	}
+
+	public void setBgColor(String bgColor) {
+		this.bgColor = bgColor;
+	}
+	
+	
+
+}

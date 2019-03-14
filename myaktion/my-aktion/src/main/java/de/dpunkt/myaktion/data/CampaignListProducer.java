@@ -4,9 +4,10 @@ import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
 
-import javax.inject.Named;
-
+import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
+import javax.enterprise.inject.Produces;
+import javax.inject.Named;
 
 import de.dpunkt.myaktion.model.Account;
 import de.dpunkt.myaktion.model.Campaign;
@@ -14,20 +15,21 @@ import de.dpunkt.myaktion.model.Donation;
 import de.dpunkt.myaktion.model.Donation.Status;
 
 @SessionScoped
-@Named
 public class CampaignListProducer implements Serializable {
 
 	/**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = 1335819936144510848L;
-	
+
+
 	private List<Campaign> campaigns;
-	
-	public CampaignListProducer() {
+
+	@PostConstruct
+	public void init() {
 		campaigns = createMockCampaigns();
 	}
-	
+
 	private List<Campaign> createMockCampaigns() {
 		Donation donation = new Donation();
 		donation.setDonorName("Heinz Schmidt");
@@ -64,13 +66,15 @@ public class CampaignListProducer implements Serializable {
 		ret.add(campaign);
 		ret.add(campaign2);
 		return ret;
-		
+
 	}
 
+	@Produces
+	@Named
 	public List<Campaign> getCampaigns() {
 		return campaigns;
 	}
-	
-	
+
+
 
 }

@@ -10,7 +10,7 @@
 			<ui:define name="content">
 				<h1>#{msg['listCampaigns.my_campaigns']}</h1>
 				<h:form>
-					<p:dataTable value="#{campaignListProducer.campaigns}" var="campaign">
+					<p:dataTable value="#{campaigns}" var="campaign">
 						<p:column>
 							<p:commandButton onclick="confirmation.show()" actionListener="#{listCampaignsController.doDeleteCampaign(campaign)}" icon="ui-icon-close"/>
 						</p:column>
@@ -41,12 +41,12 @@
 						</p:column>
 					</p:dataTable>
 					<p:commandButton value="#{msg['listCampaigns.add_campaign']}" action="#{listCampaignsController.doAddCampaign}" ajax="false"/>
-					<p:confirmDialog 
+					<p:confirmDialog
 						message="#{msg['listCampaigns.ask_delete_campaign']}"
 						header="#{msg['listCampaigns.delete_campaign']}"
 						severity="alert"
 						widgetVar="confirmation">
-						<p:commandButton value="#{msg['listCampaigns.yes']}" oncomplete="confirmation.hide()" ajax="false" 
+						<p:commandButton value="#{msg['listCampaigns.yes']}" oncomplete="confirmation.hide()" ajax="false"
 							actionListener="#{listCampaignsController.commitDeleteCampaign}" />
 						<p:commandButton value="#{msg['listCampaigns.no']}"  onclick="confirmation.hide()" />
 					</p:confirmDialog>

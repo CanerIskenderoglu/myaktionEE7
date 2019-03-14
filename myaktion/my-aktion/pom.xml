@@ -46,22 +46,21 @@
      		<groupId>org.wildfly</groupId>
      		<artifactId>wildfly-arquillian-container-remote</artifactId>
      		<version>8.1.0.Final</version>
+     		<exclusions>
+            	<exclusion>
+                	<groupId>sun.jdk</groupId>
+                	<artifactId>jconsole</artifactId>
+            	</exclusion>
+        	</exclusions>
      		<scope>test</scope>
      	</dependency>
-     	<dependency>
-            <groupId>sun.jdk</groupId>
-            <artifactId>jconsole</artifactId>
-            <version>jdk</version>
-            <scope>system</scope>
-            <systemPath>${java.home}/../lib/jconsole.jar</systemPath>
-		</dependency>
     </dependencies>
     <build>
         <plugins>
         	<plugin>
                 <groupId>org.wildfly.plugins</groupId>
                 <artifactId>wildfly-maven-plugin</artifactId>
-                <version>2.0.0.Final</version>
+                <version>1.2.1.Final</version>
             </plugin>
            	<plugin>
            		<groupId>org.apache.maven.plugins</groupId>
@@ -75,11 +74,11 @@
            				</goals>
            			</execution>
            		</executions>
-           	</plugin> 
+           	</plugin>
         </plugins>
         <finalName>my-aktion</finalName>
     </build>
-    
+
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>

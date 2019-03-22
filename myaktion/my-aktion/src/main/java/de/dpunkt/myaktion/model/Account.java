@@ -1,15 +1,18 @@
 package de.dpunkt.myaktion.model;
 
+import javax.persistence.Embeddable;
+
+@Embeddable
 public class Account {
-	
+
 	private String name;
 	private String nameOfBank;
 	private String iban;
-	
+
 	public Account() {
 		this(null,null,null);
 	}
-	
+
 	public Account(String name,String nameOfBank,String iban) {
 		super();
 		this.name = name;

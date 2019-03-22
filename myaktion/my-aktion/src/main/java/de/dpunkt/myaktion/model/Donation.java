@@ -1,22 +1,56 @@
 package de.dpunkt.myaktion.model;
 
-import com.sun.mail.imap.protocol.Status;
+import javax.persistence.Embedded;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
+@Entity
 public class Donation {
-	
+
+	@GeneratedValue
+	@Id
+	private Long id;
+	@ManyToOne
+	private Campaign campaign;
+	@Embedded
+	private Account account;
 	private Double amount;
 	private String donorName;
 	private Boolean receiptRequested;
 	private Status status;
-	private Account account;
-	
+
 	public enum Status {
 		TRANSFERRED,IN_PROCESS;
 	}
-	
+
 	public Donation() {
 		this.account = new Account();
 	}
+
+
+
+	public Campaign getCampaign() {
+		return campaign;
+	}
+
+
+
+	public void setCampaign(Campaign campaign) {
+		this.campaign = campaign;
+	}
+
+
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
 
 	public Double getAmount() {
 		return amount;
@@ -57,7 +91,7 @@ public class Donation {
 	public void setAccount(Account account) {
 		this.account = account;
 	}
-	
-	
+
+
 
 }

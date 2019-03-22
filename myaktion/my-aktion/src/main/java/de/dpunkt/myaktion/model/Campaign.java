@@ -2,25 +2,49 @@ package de.dpunkt.myaktion.model;
 
 import java.util.List;
 
+import javax.persistence.AttributeOverride;
+import javax.persistence.AttributeOverrides;
+import javax.persistence.Column;
+import javax.persistence.Embedded;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 
+import org.openqa.selenium.support.FindAll;
+
+@NamedQueries( {
+	@NamedQuery(name = Campaign.findAll, query = "SELECT c FROM Campaign c ORDER BY c.name")
+})
+@Entity
 public class Campaign {
+	public static final String findAll = "Campaign.findAll";
+
+	@GeneratedValue
+	@Id
+	private Long id;
+	@AttributeOverrides({@AttributeOverride(name = "name", column = @Column(name = "accountName"))})
+	@Embedded
+	private Account account;
 
 	private String name;
 	private Double targetAmount;
 	private Double donationMinimum;
 	private Double amountDonatedSoFar;
-	private Account account;
-	private Long id;
+
+	@OneToMany(mappedBy = "campaign")
 	private List<Donation> donations;
-	
+
 	public Campaign() {
 		account = new Account();
 	}
-	
+
 	public String getName() {
 		return name;
 	}
-	
+
 	public void setName(String name) {
 		this.name = name;
 	}
@@ -60,5 +84,5 @@ public class Campaign {
 	public void setDonations(List<Donation> donations) {
 		this.donations = donations;
 	}
-	
+
 }

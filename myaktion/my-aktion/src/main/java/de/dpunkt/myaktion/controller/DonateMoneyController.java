@@ -13,19 +13,21 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import de.dpunkt.myaktion.model.Donation;
+import de.dpunkt.myaktion.model.Donation.Status;
+import de.dpunkt.myaktion.services.DonationService;
 
 @ViewScoped
 @Named
 public class DonateMoneyController implements Serializable {
 
-	/**
-	 *
-	 */
 	private static final long serialVersionUID = -826257190488005965L;
 	private String textColor = "000000";
 	private String bgColor = "ffffff";
 	private Long campaignId;
 	private Donation donation;
+	
+	@Inject
+	DonationService donationService;
 
 	@Inject
 	private FacesContext facesContext;
@@ -78,6 +80,8 @@ public class DonateMoneyController implements Serializable {
 		String msg = resourceBundle.getString("donateMoney.thank_you");
 		facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, msg,null));
 		init();
+		getDonation().setStatus(Status.IN_PROCESS);
+		donationService.addDonation(getCampaignId(), getDonation());
 		return Pages.DONATE_MONEY;
 	}
 

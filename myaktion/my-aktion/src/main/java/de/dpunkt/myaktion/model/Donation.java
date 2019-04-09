@@ -5,21 +5,37 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Entity
 public class Donation {
 
+	@NotNull(message = "{donation.amount.notNull}" )
+	@DecimalMin(value = "1.00", message = "{donation.amount.decimalMin}")
+	private Double amount;
+
+	@Size(min = 5, max = 40, message = "{donation.donorName.size}")
+	private String donorName;
+
+	@NotNull
+	private Boolean receiptRequested;
+
+	@NotNull
+	private Status status;
+
 	@GeneratedValue
 	@Id
 	private Long id;
+
 	@ManyToOne
+	@NotNull
 	private Campaign campaign;
+
 	@Embedded
+	@NotNull
 	private Account account;
-	private Double amount;
-	private String donorName;
-	private Boolean receiptRequested;
-	private Status status;
 
 	public enum Status {
 		TRANSFERRED,IN_PROCESS;
